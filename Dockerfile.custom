@@ -1,0 +1,18 @@
+# FROM node:6-stretch
+# FROM node:14.1.0
+FROM registry.snld.ca/snyk/seanland-os:22.04.0-20220913
+
+RUN mkdir /usr/src/goof
+RUN mkdir /tmp/extracted_files
+COPY . /usr/src/goof
+WORKDIR /usr/src/goof
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y curl
+RUN curl -fsSL https://deb.nodesource.com/setup_19.x
+RUN apt-get install -y npm nodejs
+RUN npm update
+RUN npm install
+EXPOSE 3001
+EXPOSE 9229
+ENTRYPOINT ["npm", "start"]
